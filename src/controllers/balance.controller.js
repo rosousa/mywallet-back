@@ -42,7 +42,7 @@ const balance = async (req, res) => {
 
     const total = (totalDeposit - totalWithdraw) / 100;
 
-    res.send({ total: total.toFixed(2) });
+    res.send({ balance: total.toFixed(2) });
   } catch (error) {
     console.log(error.message);
     res.sendStatus(500);

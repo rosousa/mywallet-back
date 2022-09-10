@@ -3,7 +3,7 @@ import db from "../database/db.js";
 import dayjs from "dayjs";
 
 const depositSchema = joi.object({
-  value: joi.number().min(1).required(),
+  value: joi.number().required(),
   description: joi.string().min(1).required(),
   token: joi.string().min(1).required(),
 });

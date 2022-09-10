@@ -46,7 +46,7 @@ const signInController = async (req, res) => {
       .collection("session")
       .insertOne({ userId: userExists._id, token: TOKEN });
 
-    res.send(TOKEN).status(201);
+    res.send({ username: userExists.name, token: TOKEN }).status(201);
   } catch (error) {
     console.log(error.message);
     return res.sendStatus(500);

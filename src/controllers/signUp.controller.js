@@ -21,14 +21,14 @@ const signUpController = async (req, res) => {
   }
 
   try {
-    const userExists = await db.collection("users").findOne({ email });
+    const userExists = await db.collection("user").findOne({ email });
 
     if (userExists) {
       return res.sendStatus(409);
     }
 
     await db
-      .collection("users")
+      .collection("user")
       .insertOne({ name, email, password: bcrypt.hashSync(password, 10) });
     res.sendStatus(201);
   } catch (error) {

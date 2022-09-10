@@ -3,7 +3,7 @@ import db from "../database/db.js";
 
 const tokenSchema = joi.string().min(1).required();
 
-const balance = async (req, res) => {
+const statement = async (req, res) => {
   let token = res.locals.token;
 
   const validToken = tokenSchema.validate(token);
@@ -25,28 +25,16 @@ const balance = async (req, res) => {
       return res.sendStatus(401);
     }
 
-    const transactionList = await db
+    const EXTRACT = await db
       .collection("transaction")
       .find({ userId: validSession.userId })
       .toArray();
 
-    const totalDeposit = transactionList
-      .filter((transaction) => transaction.type === "deposit")
-      .map((transaction) => transaction.value)
-      .reduce((previous, current) => previous + current);
-
-    let totalWithdraw = transactionList
-      .filter((transaction) => transaction.type === "withdraw")
-      .map((transaction) => transaction.value)
-      .reduce((previous, current) => previous + current);
-
-    const total = (totalDeposit - totalWithdraw) / 100;
-
-    res.send({ total: total.toFixed(2) });
+    res.send(EXTRACT).status(200);
   } catch (error) {
     console.log(error.message);
     res.sendStatus(500);
   }
 };
 
-export default balance;
+export default statement;

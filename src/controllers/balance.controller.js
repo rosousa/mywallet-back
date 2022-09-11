@@ -33,18 +33,18 @@ const balance = async (req, res) => {
     const totalDeposit = transactionList
       .filter((transaction) => transaction.type === "deposit")
       .map((transaction) => transaction.value)
-      .reduce((previous, current) => previous + current);
+      .reduce((previous, current) => previous + current, 0);
 
-    let totalWithdraw = transactionList
+    const totalWithdraw = transactionList
       .filter((transaction) => transaction.type === "withdraw")
       .map((transaction) => transaction.value)
-      .reduce((previous, current) => previous + current);
+      .reduce((previous, current) => previous + current, 0);
 
     const total = (totalDeposit - totalWithdraw) / 100;
 
     res.send({ balance: total.toFixed(2) });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
     res.sendStatus(500);
   }
 };
